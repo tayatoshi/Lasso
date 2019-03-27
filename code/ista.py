@@ -44,17 +44,6 @@ def solve_lasso_by_ista(y,x,Lambda,rho,max_iter=300000,gamma=1e-5):
         beta0 = beta_new
     raise ValueError('Not converged.')
 
-
-def get_lnlikelihood(y,X,beta_hat):
-    sigma2_hat = ((y - X@beta_hat).T @ (y - X@beta_hat))/y.shape[0]
-    likeli = 0
-    for i in range(y.shape[0]):
-        ln_left= np.log(1/np.sqrt(2*np.pi*sigma2_hat))
-        ln_right= (-(y[i,0] - X[i,:]@beta_hat)**2)/2*sigma2_hat
-        new_likeli = ln_left + ln_right
-        likeli = likeli + new_likeli
-    return likeli[0,0]
-
 def get_rho(X):
     return np.max(np.sum(np.abs(X), axis=0))
 
